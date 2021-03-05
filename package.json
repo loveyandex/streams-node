@@ -1,0 +1,12 @@
+{
+  "name": "streams",
+  "version": "1.0.0",
+  "main": "wbsc.js",
+  "license": "MIT",
+  "dependencies": {
+    "binance-api-node": "^0.10.32",
+    "express": "^4.17.1",
+    "stompjs": "^2.3.3",
+    "ws": "^7.4.3"
+  }
+}

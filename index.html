@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>charting started</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <style>
+        body {
+            background-color: #2b2b43;
+            color: #b1a7d6f2;
+        }
+
+        .switcher {
+            display: flex;
+            align-items: center;
+            height: 30px;
+            margin-top: 8px;
+            color: #2196F3;
+        }
+
+        .switcher-item {
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            padding: 6px 8px;
+            font-size: 14px;
+            color: #262b3e;
+            background-color: transparent;
+            margin-right: 8px;
+            border: none;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .switcher-item:hover {
+            background-color: #f2f3f5;
+        }
+
+        .switcher-active-item {
+            text-decoration: none;
+            cursor: default;
+            color: #262b3e;
+        }
+
+        .switcher-active-item,
+        .switcher-active-item:hover {
+            background-color: #e1eff9;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div>
+        <h2>Abolfazl & Milad Finance Performance in the close Future</h2>
+    </div>
+    <!--     
+    <script>
+        const chart = LightweightCharts.createChart(document.body, { width: 400, height: 300 });
+const lineSeries = chart.addLineSeries();
+lineSeries.setData([
+    { time: '2019-04-11', value: 80.01 },
+    { time: '2019-04-12', value: 96.63 },
+    { time: '2019-04-13', value: 76.64 },
+    { time: '2019-04-14', value: 81.89 },
+    { time: '2019-04-15', value: 74.43 },
+    { time: '2019-04-16', value: 80.01 },
+    { time: '2019-04-17', value: 96.63 },
+    { time: '2019-04-18', value: 76.64 },
+    { time: '2019-04-19', value: 81.89 },
+    { time: '2019-04-20', value: 74.43 },
+    { time: '2019-04-21', value: 74.43 },
+    { time: '2019-04-22', value: 74.43 },
+    { time: '2019-04-23', value: 74.43 },
+    { time: '2019-04-24', value: 74.43 },
+    { time: '2019-04-25', value: 174.43 },
+    { time: '2019-04-26', value: 44.43 },
+    { time: '2019-04-27', value: 44.43 },
+    { time: '2019-04-28', value: 44.43 },
+    { time: '2019-04-29', value: 44.43 },
+    { time: '2019-04-30', value: 44.43 },
+    { time: '2019-05-01', value: 22.43 },
+    { time: '2019-05-02', value: 114.43 },
+]);
+    </script> -->
+
+    <script>
+        function createSimpleSwitcher(items, activeItem, activeItemChangedCallback) {
+            var switcherElement = document.createElement('div');
+            switcherElement.classList.add('switcher');
+
+            var intervalElements = items.map(function (item) {
+                var itemEl = document.createElement('button');
+                itemEl.innerText = item;
+                itemEl.classList.add('switcher-item');
+                itemEl.classList.toggle('switcher-active-item', item === activeItem);
+                itemEl.addEventListener('click', function () {
+                    onItemClicked(item);
+                });
+                switcherElement.appendChild(itemEl);
+                return itemEl;
+            });
+
+            function onItemClicked(item) {
+                if (item === activeItem) {
+                    return;
+                }
+
+                intervalElements.forEach(function (element, index) {
+                    element.classList.toggle('switcher-active-item', items[index] === item);
+                });
+
+                activeItem = item;
+
+                activeItemChangedCallback(item);
+            }
+
+            return switcherElement;
+        }
+
+        var switcherElement = createSimpleSwitcher(['Dark', 'Light'], 'Dark', syncToTheme);
+
+        var chartElement = document.createElement('div');
+
+        var chart = LightweightCharts.createChart(chartElement, {
+            width: 1200,
+            height: 600,
+            rightPriceScale: {
+                borderVisible: false,
+            },
+            timeScale: {
+                borderVisible: false,
+            },
+        });
+
+        document.body.appendChild(chartElement);
+        document.body.appendChild(switcherElement);
+
+        var areaSeries = chart.addAreaSeries({
+            topColor: 'rgba(33, 150, 243, 0.56)',
+            bottomColor: 'rgba(33, 150, 243, 0.04)',
+            lineColor: 'rgba(33, 150, 243, 1)',
+            lineWidth: 2,
+        });
+
+        var darkTheme = {
+            chart: {
+                layout: {
+                    backgroundColor: '#2B2B43',
+                    lineColor: '#2B2B43',
+                    textColor: '#D9D9D9',
+                },
+                watermark: {
+                    color: 'rgba(0, 0, 0, 0)',
+                },
+                crosshair: {
+                    color: '#758696',
+                },
+                grid: {
+                    vertLines: {
+                        color: '#2B2B43',
+                    },
+                    horzLines: {
+                        color: '#363C4E',
+                    },
+                },
+            },
+            series: {
+                topColor: 'rgba(32, 226, 47, 0.56)',
+                bottomColor: 'rgba(32, 226, 47, 0.04)',
+                lineColor: 'rgba(32, 226, 47, 1)',
+            },
+        };
+
+        const lightTheme = {
+            chart: {
+                layout: {
+                    backgroundColor: '#FFFFFF',
+                    lineColor: '#2B2B43',
+                    textColor: '#191919',
+                },
+                watermark: {
+                    color: 'rgba(0, 0, 0, 0)',
+                },
+                grid: {
+                    vertLines: {
+                        visible: false,
+                    },
+                    horzLines: {
+                        color: '#f0f3fa',
+                    },
+                },
+            },
+            series: {
+                topColor: 'rgba(33, 150, 243, 0.56)',
+                bottomColor: 'rgba(33, 150, 243, 0.04)',
+                lineColor: 'rgba(33, 150, 243, 1)',
+            },
+        };
+
+        var themesData = {
+            Dark: darkTheme,
+            Light: lightTheme,
+        };
+
+        function syncToTheme(theme) {
+            chart.applyOptions(themesData[theme].chart);
+            areaSeries.applyOptions(themesData[theme].series);
+        }
+
+        const data = []
+
+        // Create WebSocket connection.
+        const socket = new WebSocket('ws://localhost:8080');
+
+        // Connection opened
+        socket.addEventListener('open', function (event) {
+            socket.send('Hello Server!');
+        });
+
+        // Listen for messages
+        socket.addEventListener('message', function (event) {
+            console.log('Message from server ', event.data);
+            let ev=JSON.parse(event.data)
+
+            data.push({
+                "time": ev.timestamp,
+                "value":ev.price
+            })
+            areaSeries.setData(data);
+        });
+
+
+
+        syncToTheme('Dark');
+
+
+
+    </script>
+</body>
+
+</html>
