@@ -4,6 +4,7 @@
   "main": "wbsc.js",
   "license": "MIT",
   "dependencies": {
+    "amqplib": "^0.7.1",
     "binance-api-node": "^0.10.32",
     "express": "^4.17.1",
     "stompjs": "^2.3.3",

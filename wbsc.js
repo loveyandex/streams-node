@@ -16,7 +16,7 @@ wss.on('connection', function connection(ws) {
         console.log('received: %s', message);
     });
 
-    
+
     client.ws.aggTrades(['BTCUSDT'], trade => {
         // console.log(trade);
         ws.send(JSON.stringify(trade));
